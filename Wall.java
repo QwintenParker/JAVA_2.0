@@ -35,52 +35,22 @@ public class Wall {
 
             if (character.x >= this.x && character.x <= this.x + width && character.y + character.height - 7 >= this.y && character.y + 7 <= this.y + height) {
                 character.x = x + width;
-                System.out.println("LLLLL");
                 character.wallL = true;
-                this.wallL = true;
-                character.noWallsX = false;
-            } else {
-                this.wallL = false;
-                if (!character.wallL && !character.wallR) {
-                    character.noWallsX = true;
-                }
-
             }
 
             if (character.x + character.width >= this.x && character.x + character.width <= this.x + width && character.y + character.height - 7 >= this.y && character.y + 7 <= this.y + height) {
                 character.x = x - 50;
                 character.wallR = true;
-                System.out.println("RRRRR");
-                this.wallR = true;
-                character.noWallsX = false;
-            } else {
-                if (!character.wallR && !character.wallL) {
-                    character.noWallsX = true;
-                }
             }
 
             if (character.x + character.width - 7 >= this.x && character.x + 7 <= x + width && character.y >= y && character.y <= y + height) {
                 character.y = y + height;
                 character.wallU = true;
-                this.wallU = true;
-                System.out.println("UUUUU");
-                character.noWallsY = false;
-            } else {
-                if (!character.wallU && !character.wallD) {
-                    character.noWallsY = true;
-                }
             }
 
             if (character.x + character.width - 7 >= this.x && character.x + 7 <= this.x + width && character.y + character.height >= this.y && character.y + character.height <= this.y + height) {
                 character.y = y - 50;
                 character.wallD = true;
-                this.wallD = true;
-                System.out.println("DDDDD");
-                character.noWallsY = false;
-            } else {
-                if (!character.wallD && !character.wallU) {
-                    character.noWallsY = true;
-                }
             }
     }
 
@@ -127,11 +97,7 @@ public class Wall {
         }*/
 
         if (character.worldRunL) {
-            if (!character.noWallsX && character.wallL) {
-                character.stopRunningLeft();
-            } else {
-                character.startRunningLeft();
-            }
+            character.startRunningLeft();
         } else {
             character.stopRunningLeft();
         }
@@ -154,11 +120,30 @@ public class Wall {
             character.stopRunningDown();
         }
 
-        x -= character.runningX * dt * speedX;
-        y -= character.runningY * dt * speedY;
-        if (!character.wallL) {
-            System.out.println("BLYT");
+        if (character.wallL) {
+            x += character.runningX * speedX * dt;
         }
+
+        if (character.wallR) {
+            x += character.runningX * speedX * dt;
+        }
+
+        if (character.wallU) {
+            y += character.runningY * speedY * dt;
+        }
+
+        if (character.wallD) {
+           y += character.runningY * speedY * dt;
+        }
+
+
+
+        x -= character.runningX * speedX * dt;
+        y -= character.runningY * speedY * dt;
+
+        /*if (!character.wallL) {
+            System.out.println("BLYT");
+        }*/
     }
 
 

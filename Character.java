@@ -7,7 +7,7 @@ import java.io.IOException;
 
 
 public class Character {
-    public File img1 = new File("C:\\Users\\small\\IdeaProjects\\JAVA_2.0-main\\JAVA_2.0-main\\failed.png");
+    public File img1 = new File("failed.png");
     public double x;
     public double y;
     public double width;
@@ -31,6 +31,8 @@ public class Character {
     public boolean wallD;
     public boolean noWallsX;
     public boolean noWallsY;
+    public double dtX;
+    public double dtY;
     //public boolean nextWallL;
     //public boolean nextWallR;
     //public boolean nextWallU;

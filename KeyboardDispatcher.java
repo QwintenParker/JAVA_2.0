@@ -18,25 +18,25 @@ public class KeyboardDispatcher implements KeyEventDispatcher {
                     panel.character.worldRunL = true;
                     System.out.println("YEEEEEES");
                //panel.character.worldRunR = false;
-               //    panel.character.wallR = false;
+                    //panel.character.wallR = false;
             } else
 
             if (e.getKeyCode() == KeyEvent.VK_D) {
                     panel.character.worldRunR = true;
                 //panel.character.worldRunL = false;
-                //    panel.character.wallL = false;
+                   // panel.character.wallL = false;
             } else
 
             if (e.getKeyCode() == KeyEvent.VK_W) {
                     panel.character.worldRunU = true;
                 //panel.character.worldRunD = false;
-                //    panel.character.wallD = false;
+                    panel.character.wallD = false;
             } else
 
             if (e.getKeyCode() == KeyEvent.VK_S) {
                     panel.character.worldRunD = true;
                 //panel.character.worldRunU = false;
-                //    panel.character.wallU = false;
+                    panel.character.wallU = false;
             }
         }
 

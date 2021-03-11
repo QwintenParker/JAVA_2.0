@@ -12,35 +12,19 @@ public class Character {
     public double y;
     public double width;
     public double height;
-    public double canMoveX;
-    public double canMoveY;
     public double xRunningSpeed;
     public double yRunningSpeed;
     public int runningX;
     public int runningY;
     public double characterHealth;
     public boolean canHit;
+    public boolean isMoving;
     public BufferedImage gameOverImage;
-    public boolean worldRunL = false;
-    public boolean worldRunR;
-    public boolean worldRunU;
-    public boolean worldRunD;
-    public boolean wallL;
-    public boolean wallR;
-    public boolean wallU;
-    public boolean wallD;
-    public boolean noWallsX;
-    public boolean noWallsY;
+    public boolean changeL;
     public double dtX;
     public double dtY;
-    //public boolean nextWallL;
-    //public boolean nextWallR;
-    //public boolean nextWallU;
-    //public boolean nextWallD;
-    //public boolean wallLNO;
-    //public boolean wallRNO;
-    //public boolean wallUNO;
-    //public boolean wallDNO;
+    public double nX;
+    public double nY;
 
 
     public Character(double x, double y) throws IOException {
@@ -48,8 +32,6 @@ public class Character {
         this.y = y;
         this.width = 50;
         this.height = 50;
-        this.canMoveX = x - 50;
-        this.canMoveY = y - 50;
         this.xRunningSpeed = 0.2;
         this.yRunningSpeed = 0.2;
         this.runningX = 0;
@@ -57,19 +39,7 @@ public class Character {
         this.characterHealth = 100;
         this.canHit = false;
         this.gameOverImage = ImageIO.read(img1);
-        this.worldRunR = false;
-        this.worldRunU = false;
-        this.worldRunD = false;
-        this.wallL = false;
-        this.wallR = false;
-        this.wallU = false;
-        this.wallD = false;
-        this.noWallsX = true;
-        this.noWallsY = true;
-        //this.nextWallL = wallL;
-        //this.nextWallR = wallR;
-        //this.nextWallU = wallU;
-        //this.nextWallD = wallD;
+        this.isMoving = false;
     }
 
     public void draw(Graphics g) {
@@ -127,53 +97,35 @@ public class Character {
         }
     }
 
+    public void update(long dt) {
 
+        dtX = runningX * xRunningSpeed * dt;
+        dtY = runningY * yRunningSpeed * dt;
 
-    public void update(long dt, Walls walls) {
-        walls.wallsMoves(dt);
+        x += dtX;
+        y += dtY;
+
     }
 
-    public void open(MouseEvent e, Walls walls) {
-        walls.open(e);
-    }
-
-    /*public void checkObjects(Wall wall) {
-        if (x >= wall.x && x <= wall.x + wall.width && y + height - 7 >= wall.y && y + 7 <= wall.y + wall.height) {
-            x = wall.x + wall.width;
-            wallL = true;
-            System.out.println("LLLLL");
-            //this.wallL = true;
+    public void changeLocation(double x0, double y0, double xN, double yN, World world) {
+        if (x < x0) {
+            world.changeLocation(4);
+            this.x = 999;
         }
 
-        if (x + width >= wall.x && x + width <= wall.x + wall.width && y + height - 7 >= wall.y && y + 7 <= wall.y + height) {
-            x = wall.x - 50;
-            wallR = true;
-            System.out.println("RRRRR");
-            //this.wallR = true;
+        if (x > xN) {
+            world.changeLocation(2);
+            this.x = 1;
         }
 
-        if (x + width - 7 >= wall.x && x + 7 <= wall.x + wall.width && y >= wall.y && y <= wall.y + wall.height) {
-            y = wall.y + wall.height;
-            wallU = true;
-            //this.wallU = true;
-            System.out.println("UUUUU");
+        if (y < y0) {
+            world.changeLocation(1);
+            this.y = 999;
         }
 
-        if (x + width - 7 >= wall.x && x + 7 <= wall.x + wall.width && y + height >= wall.y && y + height <= wall.y + wall.height) {
-            y = wall.y - 50;
-            wallD = true;
-            //this.wallD = true;
-            System.out.println("DDDDD");
-        }
-    }*/
-
-
-    public void damage(Enemy enemy, MouseEvent e) {
-        if (e.getX() >= enemy.x && e.getX() <= enemy.x + 40 && e.getY() >= enemy.y && e.getY() <= enemy.y + 40) {
-            if ((x - 5 <= enemy.x + 35 && x + 55 >= enemy.x) && (y - 5 <= enemy.y + 35 && y + 55 >= enemy.y)) {
-                enemy.enemyHealth -= 10;
-                System.out.println("Yes");
-            }
+        if (y > yN) {
+            world.changeLocation(3);
+            this.y = 1;
         }
     }
 }

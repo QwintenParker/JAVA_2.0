@@ -7,38 +7,38 @@ import java.io.IOException;
 public class MyPanel extends JPanel implements MouseListener {
 
     public Character character;
-    public Enemy enemy1;
-    public Enemy enemy2;
+    public double x0;
+    public double y0;
+    public double xN;
+    public double yN;
     private long previousWorldUpdateTime;
     private double frameWidth;
     private double frameHeight;
-    public Walls walls0;
+    public World world;
 
     public MyPanel(double x, double y) throws IOException {
         this.frameWidth = x;
         this.frameHeight = y;
+        this.x0 = 0;
+        this.y0 = 0;
+        this.xN = x;
+        this.yN = y;
         this.character = new Character(frameWidth/2 - 50, frameHeight/2 - 50);
-        this.enemy1 = new Enemy((double) 700, (double) 700, character);
-        this.enemy2 = new Enemy(120, 700, character);
-        this.walls0 = new Walls(character);
+        this.world = new World(character);
         this.previousWorldUpdateTime = System.currentTimeMillis();
         this.addMouseListener(this);
-        //walls0.createWallsSquare();
-        //walls0.createObjects();
-        walls0.createTestWorld();
+        world.createTestWorld();
+        world.createEnemies();
+        System.out.println(x0 + ", " + y0 + " : " + xN + ", " + yN);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        walls0.drawWalls(g);
+        world.drawWalls(g);
         character.draw(g);
-        walls0.drawObjects(g);
-        enemy1.draw(g);
-        enemy2.draw(g);
-        character.drawGameOver(g);
-
+        world.drawEnemies(g);
 
     }
 
@@ -46,20 +46,23 @@ public class MyPanel extends JPanel implements MouseListener {
         long currentTime = System.currentTimeMillis();
         long dt = currentTime - previousWorldUpdateTime;
 
-        character.update(dt, walls0);
-        enemy1.update(dt);
-        enemy2.update(dt);
-        enemy1.updateDamage();
-        enemy2.updateDamage();
+        world.checkEnemyWalls();
+
+        character.update(dt);
+        world.updateEnemies(dt);
+        character.changeLocation(x0, y0, xN, yN, world);
+        //walls0.update(dt);
 
         previousWorldUpdateTime = currentTime;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        character.open(e, walls0);
-        character.damage(enemy1, e);
-        character.damage(enemy2, e);
+
+        world.updateCharacterDamage(e);
+        //character.open(e, walls0);
+        //character.damage(enemy1, e);
+        //character.damage(enemy2, e);
     }
 
     @Override

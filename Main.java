@@ -9,7 +9,7 @@ public class Main {
         frame.setLocation(640, 200);
         frame.setTitle("TEST_MOVES");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setResizable(false);
+        //frame.setResizable(false);
 
 
         MyPanel panel = new MyPanel((double) frame.getWidth(), (double) frame.getHeight());

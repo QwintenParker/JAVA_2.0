@@ -14,31 +14,45 @@ public class KeyboardDispatcher implements KeyEventDispatcher {
 
         if (e.getID() == KeyEvent.KEY_PRESSED) {
 
-            panel.character.isMoving = true;
-
             if (e.getKeyCode() == KeyEvent.VK_A) {
-                panel.character.startRunningLeft();
-            } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                panel.character.startRunningRight();
-            } else if (e.getKeyCode() == KeyEvent.VK_W) {
-                panel.character.startRunningUp();
-            } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                panel.character.startRunningDown();
+                    panel.character.worldRunL = true;
+                    System.out.println("YEEEEEES");
+               //panel.character.worldRunR = false;
+                    panel.character.wallR = false;
+            } else
+
+            if (e.getKeyCode() == KeyEvent.VK_D) {
+                    panel.character.worldRunR = true;
+                //panel.character.worldRunL = false;
+                    panel.character.wallL = false;
+            } else
+
+            if (e.getKeyCode() == KeyEvent.VK_W) {
+                    panel.character.worldRunU = true;
+                //panel.character.worldRunD = false;
+                    panel.character.wallD = false;
+            } else
+
+            if (e.getKeyCode() == KeyEvent.VK_S) {
+                    panel.character.worldRunD = true;
+                //panel.character.worldRunU = false;
+                    panel.character.wallU = false;
             }
         }
 
         if (e.getID() == KeyEvent.KEY_RELEASED) {
-
-            panel.character.isMoving = false;
-
             if (e.getKeyCode() == KeyEvent.VK_A) {
-                panel.character.stopRunningLeft();
+                panel.character.worldRunL = false;
+                panel.character.wallL = false;
             } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                panel.character.stopRunningRight();
+                panel.character.worldRunR = false;
+                panel.character.wallR = false;
             } else if (e.getKeyCode() == KeyEvent.VK_W) {
-                panel.character.stopRunningUp();
+                panel.character.worldRunU = false;
+                panel.character.wallU = false;
             } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                panel.character.stopRunningDown();
+                panel.character.worldRunD = false;
+                panel.character.wallD = false;
             }
         }
 

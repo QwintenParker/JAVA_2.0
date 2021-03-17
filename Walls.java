@@ -60,8 +60,12 @@ public class Walls {
 
 
     public void wallsMoves(long dt) {
+
+
+
         for (int i = 0; i < walls.size(); i++) {
             (walls.get(i)).update(dt);
+            (walls.get(i)).checkObjects();
         }
 
         for (int i = 0; i < objects.size(); i++) {

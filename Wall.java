@@ -33,75 +33,129 @@ public class Wall {
 
     public void checkObjects() {
 
+        character.wallL = false;
+        character.wallR = false;
+        character.wallU = false;
+        character.wallD = false;
+
+
             if (character.x >= this.x && character.x <= this.x + width && character.y + character.height - 7 >= this.y && character.y + 7 <= this.y + height) {
                 character.x = x + width;
+                character.wallL = true;
             }
 
             if (character.x + character.width >= this.x && character.x + character.width <= this.x + width && character.y + character.height - 7 >= this.y && character.y + 7 <= this.y + height) {
                 character.x = x - 50;
+                character.wallR = true;
             }
 
             if (character.x + character.width - 7 >= this.x && character.x + 7 <= x + width && character.y >= y && character.y <= y + height) {
                 character.y = y + height;
+                character.wallU = true;
             }
 
             if (character.x + character.width - 7 >= this.x && character.x + 7 <= this.x + width && character.y + character.height >= this.y && character.y + character.height <= this.y + height) {
                 character.y = y - 50;
+                character.wallD = true;
             }
     }
 
-    public void checkObjects(Enemy enemy) {
-
-        if (enemy.x >= this.x && enemy.x <= this.x + width && enemy.y + enemy.height - 7 >= this.y && enemy.y + 7 <= this.y + height) {
-            enemy.x = x + width;
-            enemy.xH = enemy.x + 5;
+    public void update(long dt) {
+        /*if (character.wallL) {
+            character.stopRunningLeft();
+        } else {
+            if (character.worldRunL) {
+                character.startRunningLeft();
+            } else {
+                character.stopRunningLeft();
+            }
         }
 
-        if (enemy.x + enemy.width >= this.x && enemy.x + enemy.width <= this.x + width && enemy.y + enemy.height - 7 >= this.y && enemy.y + 7 <= this.y + height) {
-            enemy.x = x - 40;
-            enemy.xH = enemy.x + 5;
+
+        if (character.wallR) {
+            character.stopRunningRight();
+        } else {
+            if (character.worldRunR) {
+                character.startRunningRight();
+            } else {
+                character.stopRunningRight();
+            }
         }
 
-        if (enemy.x + enemy.width - 7 >= this.x && enemy.x + 7 <= x + width && enemy.y >= y && enemy.y <= y + height) {
-            enemy.y = y + height;
-            enemy.yH = enemy.y - 10;
+        if (character.wallU) {
+            character.stopRunningUp();
+        } else {
+            if (character.worldRunU) {
+                character.startRunningUp();
+            } else {
+                character.stopRunningUp();
+            }
         }
 
-        if (enemy.x + enemy.width - 7 >= this.x && enemy.x + 7 <= this.x + width && enemy.y + enemy.height >= this.y && enemy.y + enemy.height <= this.y + height) {
-            enemy.y = y - 40;
-            enemy.yH = enemy.y - 10;
-        }
-    }
+        if (character.wallD) {
+            character.stopRunningDown();
+        } else {
+            if (character.worldRunD) {
+                character.startRunningDown();
+            } else {
+                character.stopRunningDown();
+            }
+        }*/
 
-    /*public void update(long dt) {
-        if (character.isMoving) {
-            //x -= character.dtX;
-            //y -= character.dtY;
+        if (character.worldRunL) {
+            character.startRunningLeft();
+        } else {
+            character.stopRunningLeft();
         }
-    }*/
 
-    public void changeLocation(int x) {
-        if (x == 1) {
-            this.y = this.y + 1000;
-        } else if (x == 2) {
-            this.x = this.x - 1000;
-        } else if (x == 3) {
-            this.y = this.y - 1000;
-        } else if (x == 4) {
-            this.x = this.x + 1000;
+        if (character.worldRunR) {
+            character.startRunningRight();
+        } else {
+            character.stopRunningRight();
         }
-    }
 
-    public void changeNLocation(int nX, int nY) {
-        x = x + 1000 * nX;
-        y = y + 1000 * nY;
+        if (character.worldRunU) {
+            character.startRunningUp();
+        } else {
+            character.stopRunningUp();
+        }
+
+        if (character.worldRunD) {
+            character.startRunningDown();
+        } else {
+            character.stopRunningDown();
+        }
+
+        if (character.wallL) {
+            x += character.runningX * speedX * dt;
+        }
+
+        if (character.wallR) {
+            x += character.runningX * speedX * dt;
+        }
+
+        if (character.wallU) {
+            y += character.runningY * speedY * dt;
+        }
+
+        if (character.wallD) {
+           y += character.runningY * speedY * dt;
+        }
+
+
+
+        x -= character.runningX * speedX * dt;
+        y -= character.runningY * speedY * dt;
+
+        /*if (!character.wallL) {
+            System.out.println("BLYT");
+        }*/
     }
 
 
 
     public void draw(Graphics g) {
         g.drawRect((int) x, (int) y, (int) width, (int) height);
-        this.checkObjects();
     }
 
 }
